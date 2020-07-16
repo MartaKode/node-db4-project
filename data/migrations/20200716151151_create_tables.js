@@ -7,19 +7,20 @@ exports.up = function (knex) {
             tbl.text('recipe_name', 128).unique().notNullable()
         })
 
+//--------
         .createTable('ingredients', tbl => {
             tbl.increments()
 
             tbl.text('ingredient_name', 128).notNullable()
-            tbl.float('quantity').unsigned().notNullable()
-            tbl.string('measure').notNullable()
+           // tbl.float('quantity').unsigned().notNullable() //--> move to the recipe_ingredients table
+           // tbl.string('measure').notNullable() //--> move to the recipe_ingredients table
 
-            tbl.integer('recipe_id')
-            .unsigned()
-            .notNullable()
-            .references('recipes.id')
-            // .onUpdate('CASCADE')
-            // .onDelete('CASCADE')
+            // tbl.integer('recipe_id')
+            // .unsigned()
+            // .notNullable()
+            // .references('recipes.id')
+            // .onUpdate('CASCADE') --> for foregin keys
+            // .onDelete('CASCADE') --> for foregin keys
         }) 
         //many recipes to many ingredients --> third table 
         .createTable('recipe_ingredients', tbl => {
@@ -34,8 +35,12 @@ exports.up = function (knex) {
             .unsigned()
             .notNullable()
             .references('ingredients.id')
+
+            tbl.float('quantity').unsigned().notNullable() //--> move to the recipe_ingredients table
+            tbl.string('measure').notNullable() //--> move to the recipe_ingredients table
         })
 
+//-------
         .createTable('instructions', tbl => {
             tbl.increments()
 
