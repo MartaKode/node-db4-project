@@ -14,27 +14,25 @@ exports.up = function (knex) {
             tbl.text('ingredient_name', 128).notNullable()
            // tbl.float('quantity').unsigned().notNullable() //--> move to the recipe_ingredients table
            // tbl.string('measure').notNullable() //--> move to the recipe_ingredients table
-
-            // tbl.integer('recipe_id')
-            // .unsigned()
-            // .notNullable()
-            // .references('recipes.id')
-            // .onUpdate('CASCADE') --> for foregin keys
-            // .onDelete('CASCADE') --> for foregin keys
+           
         }) 
         //many recipes to many ingredients --> third table 
         .createTable('recipe_ingredients', tbl => {
-            tbl.increments()
+            // tbl.increments()
 
             tbl.integer('recipe_id')
             .unsigned()
             .notNullable()
             .references('recipes.id')
+            .onUpdate('CASCADE') //--> for foregin keys
+            .onDelete('CASCADE') //--> for foregin keys
 
             tbl.integer('ingredient_id')
             .unsigned()
             .notNullable()
             .references('ingredients.id')
+            .onUpdate('CASCADE') //--> for foregin keys
+            .onDelete('CASCADE') //--> for foregin keys
 
             tbl.float('quantity').unsigned().notNullable() //--> move to the recipe_ingredients table
             tbl.string('measure').notNullable() //--> move to the recipe_ingredients table
@@ -51,6 +49,8 @@ exports.up = function (knex) {
             .unsigned()
             .notNullable()
             .references('recipes.id')
+            .onUpdate('CASCADE') //--> for foregin keys
+            .onDelete('CASCADE') //--> for foregin keys
         })
         //one recipe to one instruction?
 };
